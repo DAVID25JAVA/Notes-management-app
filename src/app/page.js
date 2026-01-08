@@ -2,7 +2,6 @@
 import { FadeLoader } from "react-spinners";
 import { NotebookPen, Plus, Trash2 } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [title, setTitle] = useState("");
@@ -10,12 +9,11 @@ export default function Home() {
   const [errors, setErrors] = useState({});
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const [isAdding, setIsAdding] = useState(false);
 
   useEffect(() => {
     const storedNotes = JSON.parse(localStorage.getItem("notes")) || [];
     setNotes(storedNotes);
-
     const timer = setTimeout(() => {
       setLoading(false);
     }, 2000);
@@ -41,17 +39,17 @@ export default function Home() {
   // add note
   const handleAddNote = () => {
     if (!validate()) return;
-
+    setIsAdding(true);
     const newNote = {
       id: Date.now(),
       title,
       desc,
     };
-
     setNotes([newNote, ...notes]);
     setTitle("");
     setDesc("");
     setErrors({});
+    setIsAdding(false);
   };
 
   // delete note
@@ -86,9 +84,16 @@ export default function Home() {
 
         <button
           onClick={handleAddNote}
-          className="flex items-center gap-2 bg-indigo-500 text-white w-28 justify-center py-2 rounded-lg hover:bg-indigo-600"
+          disabled={isAdding}
+          className={`flex items-center gap-2 w-28 justify-center py-2 rounded-lg
+           ${
+             isAdding
+               ? "bg-indigo-300 cursor-not-allowed"
+               : "bg-indigo-500 hover:bg-indigo-600 cursor-pointer"
+           }
+         text-white transition`}
         >
-          Add <Plus size={15} />
+          {isAdding ? "Adding..." : "Add"} <Plus size={15} />
         </button>
       </div>
 
