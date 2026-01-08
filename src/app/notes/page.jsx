@@ -23,17 +23,8 @@ function Page() {
     const updatedNotes = notesData.filter(
       (note) => note.id !== id
     );
-
     setNotesData(updatedNotes);
     localStorage.setItem("notes", JSON.stringify(updatedNotes));
-
-    // 🔥 optional: track deleted count
-    const deletedCount =
-      JSON.parse(localStorage.getItem("deletedNotesCount")) || 0;
-    localStorage.setItem(
-      "deletedNotesCount",
-      JSON.stringify(deletedCount + 1)
-    );
   };
 
   return (
