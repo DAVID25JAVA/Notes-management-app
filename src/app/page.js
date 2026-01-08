@@ -60,9 +60,9 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-5">
+    <div className="max-w-2xl mx-auto sm:p-5">
       {/* Create Notes */}
-      <div className="flex flex-col gap-4 border border-indigo-300 p-5 rounded-md">
+      <div className="flex flex-col gap-4 w-full border border-indigo-300 p-5 rounded-md">
         <p className="text-gray-700 font-semibold text-xl flex items-center gap-2">
           Create Notes <Plus />
         </p>
